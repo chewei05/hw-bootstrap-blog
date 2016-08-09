@@ -85,7 +85,7 @@
          <label for="inputPassword" class="sr-only">Password</label>
          <input type="password" id="Password" name="Password" class="form-control" placeholder="密碼" required="">
          <p>
-            預設帳號為 admin, 預設密碼為 admin.
+            預設帳號為 <span class="text-danger">admin</span>, 預設密碼為 <span class="text-danger">admin</span>.
          </p>
          <div class="checkbox">
             <label>
@@ -93,12 +93,25 @@
             </label>
          </div>
          <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
+         <button class="btn btn-lg btn-info btn-block" id="btnHome">回到首頁</button>
       </form>
 
    </div> <!-- /container -->
 
    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
    <script src="./js/ie10-viewport-bug-workaround.js"></script>
+
+   <!-- jQuery -->
+   <script src="js/jquery.js"></script>
+
+   <!-- User define script -->
+   <script type="text/javascript">
+      $(document).ready(function(){
+         $("#btnHome").click(function(){
+            window.location.href = "index.php";
+         })
+      })
+   </script>
 
    </body>
 </html>
