@@ -1,0 +1,19 @@
+{
+    "name": "chewei05/hw-bootstrap-blog",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Chewei Hu",
+            "email": "chewei05@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "tinymce/tinymce": ">= 4"
+    },
+    "autoload": {
+        "classmap": [
+            "lib"
+        ]
+    }
+}

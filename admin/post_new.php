@@ -59,6 +59,12 @@
             </div>
          </div>
          <!-- /.row -->
+         <div class="row">
+            <form method="post">
+               <textarea id="mytextarea">Hello, World!</textarea>
+            </form>
+         </div>
+         <!-- /.row -->
 
          </div>
          <!-- /.container-fluid -->
@@ -74,6 +80,14 @@
 
    <!-- Bootstrap Core JavaScript -->
    <script src="js/bootstrap.min.js"></script>
+
+   <!-- TinyMCE -->
+   <script src="../lib/tinymce/tinymce/tinymce.min.js"></script>
+   <script>
+      tinymce.init({
+         selector: '#mytextarea'
+      });
+   </script>
 
 </body>
 

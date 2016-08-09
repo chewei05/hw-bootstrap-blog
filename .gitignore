@@ -1,3 +1,5 @@
 /.idea 
 /.vscode
 /connection/PDO_sample.php
+
+/vendor/
