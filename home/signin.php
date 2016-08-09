@@ -68,6 +68,10 @@
       <div class="alert alert-success form-signin">
          <strong>登出成功!</strong><br />你已成功登出本平台, 你可以再次重新登入.
       </div>
+      <?php } else if ( $_GET['s'] == 'access_deny' ) { ?>
+      <div class="alert alert-danger form-signin">
+         <strong>存取拒絕!</strong><br />你沒有權限存取本頁面, 請輸入你的帳號及密碼.
+      </div>
       <?php } ?>
       <?php } // End of isset($_GET['s']) ?>
 
