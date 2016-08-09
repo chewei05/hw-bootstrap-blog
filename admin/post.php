@@ -1,4 +1,16 @@
+<?php require_once(__DIR__.'/../connection/Conn_PDO.php'); ?>
 <?php require_once(__DIR__.'/../class/user_auth.php'); ?>
+<?php require(__DIR__ . '/../vendor/autoload.php'); ?>
+<?php
+   $varUserIndex = $_SESSION['uIndex'];
+
+   $sql_statement = "SELECT `Index`, Title, AuthorIndex, PostDatetime, LastUpdate, Content FROM post WHERE AuthorIndex = ? ORDER BY `Index` DESC ";
+   $rsPost = $pdo->prepare($sql_statement);
+   $rsPost->bindParam(1, $varUserIndex, PDO::FETCH_NUM);
+   $rsPost->execute();
+   $row_rsPost = $rsPost->fetch(PDO::FETCH_ASSOC);
+   $totalRows_rsPost = $rsPost->rowCount();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +57,7 @@
          <div class="row">
             <div class="col-lg-12">
                <h1 class="page-header">
-                  文章列表
+                  文章管理
                   <small>所有文章清單</small>
                </h1>
                <ol class="breadcrumb">
@@ -53,9 +65,46 @@
                      <i class="fa fa-dashboard"></i>  <a href="index.php">首頁</a>
                   </li>
                   <li class="active">
-                     <i class="fa fa-file"></i> 文章列表
+                     <i class="fa fa-file"></i> 文章管理
                   </li>
                </ol>
+            </div>
+         </div>
+         <!-- /.row -->
+
+         <!-- ### 分隔線 ### -->
+
+         <div class="row">
+            <div class="col-lg-12">
+            <h2>文章列表</h2>
+            <div class="table-responsive">
+               <table class="table table-bordered table-hover">
+                  <thead>
+                     <tr>
+                        <th>文章編號</th>
+                        <th>標題</th>
+                        <th>建立時間</th>
+                        <th>更新時間</th>
+                        <th>功能</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <?php do { ?>
+                     <tr>
+                        <td><?php echo $row_rsPost['Index']; ?></td>
+                        <td><?php echo $row_rsPost['Title']; ?></td>
+                        <td><?php echo $row_rsPost['PostDatetime']; ?></td>
+                        <td><?php echo $row_rsPost['LastUpdate']; ?></td>
+                        <td>
+                           <a href="post_view.php?i=<?php echo $row_rsPost['Index']; ?>"><button type="button" class="btn btn-xs btn-primary" id="btnView">查看</button></a>
+                           <a href="post_modify.php?i=<?php echo $row_rsPost['Index']; ?>"><button type="button" class="btn btn-xs btn-primary" id="btnModify">修改</button></a>
+                        </td>
+                     </tr>
+                     <?php } while ($row_rsPost = $rsPost->fetch(PDO::FETCH_ASSOC)); ?>
+                  </tbody>
+               </table>
+            </div>
+            <a href="post_new.php"><button type="button" class="btn btn-primary" id="btnPostList">新文章</button></a>
             </div>
          </div>
          <!-- /.row -->

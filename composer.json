@@ -10,10 +10,5 @@
     "minimum-stability": "stable",
     "require": {
         "tinymce/tinymce": ">= 4"
-    },
-    "autoload": {
-        "classmap": [
-            "lib"
-        ]
     }
 }
