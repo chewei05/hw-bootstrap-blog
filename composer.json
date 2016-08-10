@@ -9,6 +9,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "tinymce/tinymce": ">= 4"
+        "tinymce/tinymce": ">= 4",
+        "nesbot/carbon": "^1.21"
     }
 }

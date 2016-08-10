@@ -1,5 +1,6 @@
 <?php require_once(__DIR__.'/../connection/Conn_PDO.php'); ?>
-<?php //require(__DIR__ . '/../vendor/autoload.php'); ?>
+<?php require(__DIR__ . '/../vendor/autoload.php'); ?>
+<?php date_default_timezone_set("Asia/Taipei"); use Carbon\Carbon; ?>
 <?php
    $sql_statement = "SELECT post.`Index`, Title, AuthorIndex, PostDatetime, LastUpdate, Content, Realname, Nickname FROM post, `user` WHERE post.AuthorIndex = `user`.`Index` ORDER BY post.`Index` DESC ";
    $rsPost = $pdo->prepare($sql_statement);
@@ -90,7 +91,7 @@
                 <p class="lead">
                     作者 <a href="index.php"><?php echo $row_rsPost['Realname']; ?></a>
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> 發佈於 <?php echo $row_rsPost['PostDatetime']; ?></p>
+                <p><span class="glyphicon glyphicon-time"></span> 發佈於 <?php echo Carbon::parse($row_rsPost['PostDatetime'])->format('Y-m-d h:i'); ?></p>
                 <hr>
                 <div class="well well-lg">
                    <?php echo $row_rsPost['Content']; ?>
