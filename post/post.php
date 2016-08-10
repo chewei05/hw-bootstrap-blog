@@ -2,8 +2,11 @@
 <?php require(__DIR__ . '/../vendor/autoload.php'); ?>
 <?php date_default_timezone_set("Asia/Taipei"); use Carbon\Carbon; ?>
 <?php
-   $sql_statement = "SELECT post.`Index`, Title, AuthorIndex, PostDatetime, LastUpdate, Content, Realname, Nickname FROM post, `user` WHERE post.AuthorIndex = `user`.`Index` ORDER BY post.`Index` DESC ";
+   $varPostIndex = $_GET['i'];
+
+   $sql_statement = "SELECT post.`Index`, Title, AuthorIndex, PostDatetime, LastUpdate, Content, Realname, Nickname FROM post, `user` WHERE post.AuthorIndex = `user`.`Index` AND post.`Index` = ? ";
    $rsPost = $pdo->prepare($sql_statement);
+   $rsPost->bindParam(1, $varPostIndex, PDO::FETCH_NUM);
    $rsPost->execute();
    $row_rsPost = $rsPost->fetch(PDO::FETCH_ASSOC);
    $totalRows_rsPost = $rsPost->rowCount();
@@ -19,13 +22,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Blog Home - Start Bootstrap Template</title>
+    <title>Blog Post - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/blog-home.css" rel="stylesheet">
+    <link href="css/blog-post.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,20 +52,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="javascript:void();">Start Bootstrap</a>
+                <a class="navbar-brand" href="#">Start Bootstrap</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="javascript:alert('本頁面未建置,請「登入」後使用本網站.');">關於本站</a>
-                    </li>
-                    <li>
-                        <a href="javascript:alert('本頁面未建置,請「登入」後使用本網站.');">聯絡我們</a>
-                    </li>
-                    <li>
-                       <a href="signin.php">登入</a>
-                    </li>
+                   <li>
+                       <a href="javascript:alert('本頁面未建置,請「登入」後使用本網站.');">關於本站</a>
+                   </li>
+                   <li>
+                       <a href="javascript:alert('本頁面未建置,請「登入」後使用本網站.');">聯絡我們</a>
+                   </li>
+                   <li>
+                      <a href="../home/signin.php">登入</a>
+                   </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -75,41 +78,92 @@
 
         <div class="row">
 
-            <!-- Blog Entries Column -->
-            <div class="col-md-8">
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-8">
 
-                <h1 class="page-header">
-                    簡易部落格(首頁)
-                    <small>道場的第1份作業</small>
-                </h1>
-
-                <?php do { ?>
                 <!-- Blog Post -->
-                <h2>
-                    <a href="javascript:void();"><?php echo $row_rsPost['Title']; ?></a>
-                </h2>
+
+                <!-- Title -->
+                <h1><?php echo $row_rsPost['Title'] ?></h1>
+
+                <!-- Author -->
                 <p class="lead">
                     作者 <a href="javascript:void();"><?php echo $row_rsPost['Realname']; ?></a>
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> 發佈於 <?php echo Carbon::parse($row_rsPost['PostDatetime'])->format('Y-m-d h:i'); ?></p>
+
                 <hr>
+
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time"></span>  發佈於 <?php echo Carbon::parse($row_rsPost['PostDatetime'])->format('Y-m-d h:i'); ?></p>
+
+                <hr>
+
+                <!-- Preview Image -->
+                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+
+                <hr>
+
+                <!-- Post Content -->
                 <div class="well well-lg">
                    <?php echo $row_rsPost['Content']; ?>
                 </div>
-                <a class="btn btn-primary" href="../post/post.php?i=<?php echo $row_rsPost['Index']; ?>">更多內容 <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <hr>
+
+                <!-- Blog Comments -->
+
+                <!-- Comments Form -->
+                <div class="well">
+                    <h4>寫下你的回應或留言吧:</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" readonly="readonly"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="btnSubmit">送出</button>
+                    </form>
+                </div>
 
                 <hr>
-                <?php } while ($row_rsPost = $rsPost->fetch(PDO::FETCH_ASSOC)); ?>
 
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="javascript:alert('沒有舊文章了');">&larr; 舊文章</a>
-                    </li>
-                    <li class="next">
-                        <a href="javascript:alert('沒有新文章了');">新文章 &rarr;</a>
-                    </li>
-                </ul>
+                <!-- Posted Comments -->
+
+                <!-- Comment -->
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">無
+                            <small>無</small>
+                        </h4>
+                        暫無回應...
+                    </div>
+                </div>
+
+                <!-- Comment -->
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">無
+                            <small>無</small>
+                        </h4>
+                        暫無回應...
+                        <!-- Nested Comment -->
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">無
+                                    <small>無</small>
+                                </h4>
+                                暫無回應...
+                            </div>
+                        </div>
+                        <!-- End Nested Comment -->
+                    </div>
+                </div>
 
             </div>
 
@@ -164,13 +218,15 @@
                     <!-- /.row -->
                 </div>
 
-                <!-- Side Widget Well -->
                 <div class="well">
-                    <h4>作者的說明</h4>
-                    <p>這是一個簡易的 Blog 實作練習，以「土法煉鋼」實作，花了不少時間，至於有些細節或內容就慢慢修正吧…</p>
+                   <div class="row">
+                      <div class="col-lg-12">
+                        <a href="javascript:history.go(-1);"><button type="button" class="btn btn-primary">回到上一頁</button></a>
+                      </div>
+                      <!-- /.col-lg-6 -->
+                  </div>
+                  <!-- /.row -->
                 </div>
-
-            </div>
 
         </div>
         <!-- /.row -->
@@ -181,9 +237,8 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Chewei Hu. 2016</p>
+                     <p>Copyright &copy; Chewei Hu. 2016</p>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
         </footer>
@@ -196,6 +251,16 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+
+    <!-- User define script -->
+   <script type="text/javascript">
+      $(document).ready(function(){
+         $("#btnSubmit").click(function(){
+            alert("目前不能讓你留言喔！");
+            return false
+         })
+      })
+   </script>
 
 </body>
 
