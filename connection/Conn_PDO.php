@@ -13,7 +13,7 @@ $initial_command = "SET NAMES utf8"; // Database Collation
 try {
    $pdo = new PDO($dsn, $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => $initial_command));
 } catch(PDOException $e) {
-   echo $e->getMessage();
+   $varErrorMsg = $e->getMessage();
 }
 
 ?>
